@@ -1,0 +1,34 @@
+{
+  "id": "conversation-improvement",
+  "name": "Conversation Improvement",
+  "description": "Restrained visual reactions and persistent image memory for OpenClaw conversations.",
+  "enabledByDefault": false,
+  "activation": {
+    "onStartup": true
+  },
+  "uiHints": {
+    "enabled": {
+      "label": "Enable visual conversation enhancement"
+    },
+    "dataDir": {
+      "label": "Image library directory",
+      "help": "Persistent directory containing index.json and media files."
+    },
+    "probability": {
+      "label": "Casual reaction probability",
+      "advanced": true
+    }
+  },
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": {"type": "boolean", "default": true},
+      "dataDir": {"type": "string"},
+      "probability": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.32},
+      "playfulProbability": {"type": "number", "minimum": 0, "maximum": 1, "default": 0.65},
+      "cooldownTurns": {"type": "integer", "minimum": 0, "default": 5},
+      "maxPerSession": {"type": "integer", "minimum": 0, "default": 20}
+    }
+  }
+}

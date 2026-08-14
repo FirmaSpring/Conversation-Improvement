@@ -25,9 +25,10 @@ Conversation-Improvement
 └── Agent 原生适配器
     ├── Hermes Agent
     ├── OpenClaw
-    ├── OpenCode
-    ├── Gemini CLI
-    └── 其他经过验证的插件宿主
+    ├── ElizaOS
+    ├── Open WebUI
+    ├── Botpress
+    └── 其他已验证的对话插件宿主
 ```
 
 本项目有意**不把 MCP 作为主要分发层**。完整的对话视觉增强依赖宿主原生能力：逐轮 Hook、会话状态、图片生成和媒体发送。原生插件适配器才能正确集成这些行为。
@@ -51,14 +52,20 @@ Conversation-Improvement
 | Agent / 宿主 | 原生扩展机制 | 项目状态 |
 | --- | --- | --- |
 | Hermes Agent | 原生 Python 插件、工具、Hook、命令 | **已实现并通过测试** |
-| OpenClaw | 官方插件系统 | 计划开发适配器，尚未验证 |
-| OpenCode | 官方插件与 Hook | 计划开发适配器，尚未验证 |
-| Gemini CLI | 官方扩展与 Hook | 计划开发适配器，尚未验证 |
-| Claude Code | 官方插件机制 | 计划研究适配器，尚未验证 |
-| 其他支持插件的 Agent | 针对宿主的原生适配器 | 实现并测试后再加入 |
-| 没有合适原生插件系统的宿主 | 无适合机制 | 本项目不支持 |
+| OpenClaw | 原生 TypeScript 插件、类型化对话 Hook、工具、会话附件发送 | **适配器已实现；SDK 编译与 3 项行为测试通过；仍待真实 Gateway/频道验收** |
+| ElizaOS | 原生插件、事件、Provider、Evaluator、Action、Memory 与媒体回调 | 可完整适配，已列入计划 |
+| Open WebUI | 原生 Filter、Tool、Valve、消息与文件事件 | 可完整适配，已列入计划 |
+| Botpress | 原生 Hook、Integration、Action、分层状态与媒体卡片 | 可完整适配，已列入计划 |
+| Dify / LibreChat / Rasa / Flowise | 存在原生扩展面，但通用逐轮 Hook、设置或可靠媒体能力至少有一项受限 | 只考虑受限集成，不作为完整自动表情目标 |
+| 编程 Agent 与缺少合适原生插件 API 的宿主 | 不符合对话原生插件目标 | Conversation-Improvement 不支持 |
 
 “计划中”不代表现在已经兼容。只有适配器完成并在对应宿主中真实运行后，才会标记为支持。
+
+## 原生适配器
+
+- `adapters/openclaw`：OpenClaw 原生 TypeScript 适配器
+
+计划中的完整适配器：ElizaOS、Open WebUI、Botpress。
 
 ## Hermes Agent 适配器
 

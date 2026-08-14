@@ -1,0 +1,26 @@
+{
+  "name": "@firmaspring/openclaw-conversation-improvement",
+  "version": "0.1.0",
+  "description": "OpenClaw native adapter for Conversation-Improvement",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run src/index.test.ts"
+  },
+  "peerDependencies": {
+    "openclaw": ">=2026.8.1-beta.1"
+  },
+  "devDependencies": {
+    "openclaw": "2026.8.1-beta.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  },
+  "openclaw": {
+    "extensions": ["./src/index.ts"],
+    "runtimeExtensions": ["./dist/index.js"],
+    "compat": {
+      "pluginApi": ">=2026.8.1-beta.1",
+      "minGatewayVersion": "2026.8.1-beta.1"
+    }
+  }
+}

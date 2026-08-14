@@ -25,9 +25,10 @@ Conversation-Improvement
 └── ネイティブ Agent アダプター
     ├── Hermes Agent
     ├── OpenClaw
-    ├── OpenCode
-    ├── Gemini CLI
-    └── その他の検証済みプラグインホスト
+    ├── ElizaOS
+    ├── Open WebUI
+    ├── Botpress
+    └── その他の検証済み対話プラグインホスト
 ```
 
 本プロジェクトは **MCP を主要な配布層として使用しません**。完全なビジュアル会話拡張には、ホスト固有のターン Hook、セッション状態、画像生成、メディア送信が必要です。これらはネイティブプラグインアダプターで統合します。
@@ -51,14 +52,20 @@ Conversation-Improvement
 | Agent / ホスト | ネイティブ拡張機構 | 状態 |
 | --- | --- | --- |
 | Hermes Agent | ネイティブ Python プラグイン、ツール、Hook、コマンド | **実装・テスト済み** |
-| OpenClaw | 公式プラグインシステム | アダプター予定、未検証 |
-| OpenCode | 公式プラグインと Hook | アダプター予定、未検証 |
-| Gemini CLI | 公式拡張と Hook | アダプター予定、未検証 |
-| Claude Code | 公式プラグイン機構 | アダプター調査予定、未検証 |
-| その他のプラグイン対応 Agent | ホスト固有のネイティブアダプター | 実装とテスト後に追加 |
-| 適切なネイティブプラグイン機構を持たないホスト | 適切な方式なし | 本プロジェクトでは非対応 |
+| OpenClaw | ネイティブ TypeScript プラグイン、型付き会話 Hook、ツール、セッション添付送信 | **アダプター実装済み。SDK ビルドと 3 件の動作テストは合格。実 Gateway/チャネル受入試験は未実施** |
+| ElizaOS | ネイティブプラグイン、イベント、Provider、Evaluator、Action、Memory、メディアコールバック | 完全適応可能、計画中 |
+| Open WebUI | ネイティブ Filter、Tool、Valve、メッセージ/ファイルイベント | 完全適応可能、計画中 |
+| Botpress | ネイティブ Hook、Integration、Action、スコープ状態、メディアカード | 完全適応可能、計画中 |
+| Dify / LibreChat / Rasa / Flowise | ネイティブ拡張面はあるものの、共通ターン Hook、設定、または信頼できるメディア機能の少なくとも 1 つが制限される | 制限版のみ。完全自動リアクションの対象外 |
+| コーディングエージェントおよび適切なネイティブプラグイン API がないホスト | 対話ネイティブプラグインの対象外 | Conversation-Improvement では非対応 |
 
 「予定」は現在の互換性を意味しません。アダプターを実装し、対象ホストで実行確認した後にのみ対応済みと表示します。
+
+## ネイティブアダプター
+
+- `adapters/openclaw`：OpenClaw ネイティブ TypeScript アダプター
+
+完全アダプターの予定：ElizaOS、Open WebUI、Botpress。
 
 ## Hermes Agent アダプター
 

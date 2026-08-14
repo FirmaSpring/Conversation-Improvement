@@ -25,9 +25,10 @@ Conversation-Improvement
 └── native agent adapters
     ├── Hermes Agent
     ├── OpenClaw
-    ├── OpenCode
-    ├── Gemini CLI
-    └── other verified plugin hosts
+    ├── ElizaOS
+    ├── Open WebUI
+    ├── Botpress
+    └── other verified conversational plugin hosts
 ```
 
 This project intentionally does **not** use MCP as its primary distribution layer. Complete visual conversation enhancement depends on host-native behavior: per-turn hooks, session state, image generation, and media delivery. A native plugin adapter can integrate those capabilities correctly.
@@ -51,14 +52,20 @@ A host can still receive a limited adapter when its plugin API lacks one capabil
 | Agent / host | Native extension mechanism | Project status |
 | --- | --- | --- |
 | Hermes Agent | Native Python plugins, tools, hooks, commands | **Implemented and tested** |
-| OpenClaw | Official plugin system | Adapter planned; not yet verified |
-| OpenCode | Official plugins and hooks | Adapter planned; not yet verified |
-| Gemini CLI | Official extensions and hooks | Adapter planned; not yet verified |
-| Claude Code | Official plugin mechanism | Adapter research planned; not yet verified |
-| Other plugin-capable agents | Host-specific native adapter | Added only after implementation and testing |
-| Hosts without a suitable native plugin system | None suitable | Not supported by this project |
+| OpenClaw | Native TypeScript plugins, typed conversation hooks, tools, session attachments | **Adapter implemented; SDK build and 3 behavior tests pass; real Gateway/channel acceptance pending** |
+| ElizaOS | Native plugins, events, providers, evaluators, actions, memories, media callbacks | Full adapter feasible; planned |
+| Open WebUI | Native Filters (`inlet`/`stream`/`outlet`), Tools, Valves, message/file events | Full adapter feasible; planned |
+| Botpress | Native hooks, integrations, actions, scoped state, image/video/file cards | Full adapter feasible; planned |
+| Dify / LibreChat / Rasa / Flowise | Native extension surfaces exist, but at least one required universal hook/settings/media capability is limited | Limited integration only; not a full automatic-reaction target |
+| Coding agents and hosts without a suitable native plugin API | Not a conversational native-plugin target | Not supported by Conversation-Improvement |
 
 “Planned” does not mean compatible today. An agent is marked supported only after its adapter is implemented and exercised against that host.
+
+## Native adapters
+
+- `adapters/openclaw` — OpenClaw native TypeScript adapter
+
+Planned full adapters: ElizaOS, Open WebUI, and Botpress.
 
 ## Hermes Agent adapter
 
