@@ -1,0 +1,15 @@
+name: conversation-improvement
+version: 0.1.0
+description: Restrained visual expression, persistent image memory, and dated image retrieval for Hermes Agent
+author: ConversationImprovement contributors
+provides_tools:
+  - conversation_image_archive
+  - conversation_image_search
+  - conversation_image_generate
+  - conversation_image_pregenerate
+  - conversation_image_configure
+provides_hooks:
+  - pre_llm_call
+  - post_tool_call
+provides_commands:
+  - conversation-improvement
