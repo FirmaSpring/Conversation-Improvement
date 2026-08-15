@@ -6,6 +6,7 @@ ConversationImprovement adds restrained visual expression and a permanent, searc
 
 - Explicit image requests are allowed immediately.
 - **Global mandatory sequence:** do not call `conversation_image_generate` as the first image step. First call `conversation_image_search`, which searches stored filenames/titles in `$HERMES_HOME/conversation-improvement/library/media/`. If it returns a contextually suitable image, send that returned path directly as `MEDIA:` and stop. Generate only when no suitable stored title exists, including in a new chat.
+- **Zero-guess discovery:** start every image lookup with `conversation_image_search({"query": "", "limit": 20})`. It returns `available_titles` and each direct media path, letting the agent choose from the actual catalog instead of inventing an unreliable search term. Only use a second exact-title query to disambiguate multiple candidates.
 - An explicit-new request may bypass reuse only with `force_new=true` after the user unmistakably asks for a newly created current image.
 - Automatic image or GIF expressions are enabled by default, but only for playful contexts after a deterministic probability gate.
 - Automatic media is blocked in serious, coding, study, health, privacy, and distress contexts.

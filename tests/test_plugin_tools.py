@@ -262,6 +262,19 @@ def test_find_reusable_returns_existing_tagged_reaction(monkeypatch, tmp_path: P
     assert Path(result["image"]).is_file()
 
 
+def test_empty_search_returns_title_discovery_catalog(monkeypatch, tmp_path: Path):
+    plugin = load_plugin_package()
+    monkeypatch.setenv("HERMES_HOME", str(tmp_path / "hermes"))
+    image = tmp_path / "happy.png"
+    image.write_bytes(b"image")
+    plugin.archive({"path": str(image), "label": "开心", "tags": ["reaction"]})
+
+    result = json.loads(plugin.search({"query": "", "limit": 20}))
+    assert result["discovery"] is True
+    assert result["available_titles"] == ["开心"]
+    assert result["images"][0]["path"].endswith("开心_" + result["images"][0]["id"][:12] + ".png")
+
+
 def test_explicit_request_reuses_matching_library_image_before_generation(monkeypatch, tmp_path: Path):
     plugin = load_plugin_package()
     monkeypatch.setenv("HERMES_HOME", str(tmp_path / "hermes"))

@@ -185,18 +185,26 @@ def archive(args: dict, **_: object) -> str:
 
 
 def search(args: dict, **_: object) -> str:
+    query = str(args.get("query", ""))
+    requested_limit = int(args.get("limit", 5))
     items = ImageLibrary(data_root() / "library").search(
-        query=str(args.get("query", "")),
+        query=query,
         date_from=str(args.get("date_from", "")),
         date_to=str(args.get("date_to", "")),
-        limit=int(args.get("limit", 5)),
+        limit=requested_limit,
     )
-    return json.dumps({"success": True, "images": [
+    images = [
         {"id": item.id, "path": str(item.path), "created_at": item.created_at,
          "event_date": item.event_date, "label": item.label, "prompt": item.prompt,
          "tags": list(item.tags), "source": item.source}
         for item in items
-    ]}, ensure_ascii=False)
+    ]
+    return json.dumps({
+        "success": True,
+        "discovery": not query.strip(),
+        "available_titles": list(dict.fromkeys(item["label"] or Path(item["path"]).stem for item in images)),
+        "images": images,
+    }, ensure_ascii=False)
 
 
 def find_reusable(query: str) -> dict | None:

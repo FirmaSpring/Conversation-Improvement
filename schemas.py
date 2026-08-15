@@ -88,13 +88,14 @@ ARCHIVE_SCHEMA = {
 SEARCH_SCHEMA = {
     "name": "conversation_image_search",
     "description": (
-        "Search permanent conversation images by semantic tags, prompt text, and date. "
-        "Use when the user asks to see an older, previous, or dated image. Returns local paths suitable for MEDIA delivery."
+        "Search permanent conversation images by title/filename, semantic tags, prompt text, and date. "
+        "For any image decision, start with query='' and limit=20: this discovery call returns available_titles plus direct paths, so the assistant does not need to guess search terms. "
+        "Choose a relevant returned title and send its path as MEDIA:, or search by its exact title to narrow results."
     ),
     "parameters": {
         "type": "object",
         "properties": {
-            "query": {"type": "string"},
+            "query": {"type": "string", "description": "Use an empty string for title discovery; otherwise use an exact returned title or a known tag."},
             "date_from": {"type": "string", "description": "Inclusive YYYY-MM-DD."},
             "date_to": {"type": "string", "description": "Inclusive YYYY-MM-DD."},
             "limit": {"type": "integer", "minimum": 1, "maximum": 20, "default": 5},
