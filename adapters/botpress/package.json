@@ -1,0 +1,25 @@
+{
+  "name": "@conversation-improvement/botpress-plugin",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Native Botpress plugin for restrained visual reactions and conversation-scoped media memory.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "generate:types": "rm -rf .codegen .botpress && tsc -p tsconfig.codegen.json && node scripts/generate-types.mjs",
+    "build": "npm run generate:types && tsc -p tsconfig.json",
+    "test": "npm run generate:types && vitest run"
+  },
+  "dependencies": {
+    "@botpress/sdk": "7.2.0"
+  },
+  "devDependencies": {
+    "@botpress/cli": "7.1.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "engines": { "node": ">=18" }
+}

@@ -53,9 +53,9 @@ A host can still receive a limited adapter when its plugin API lacks one capabil
 | --- | --- | --- |
 | Hermes Agent | Native Python plugins, tools, hooks, commands | **Implemented and tested** |
 | OpenClaw | Native TypeScript plugins, typed conversation hooks, tools, session attachments | **Adapter implemented; SDK build and 3 behavior tests pass; real Gateway/channel acceptance pending** |
-| ElizaOS | Native plugins, events, providers, evaluators, actions, memories, media callbacks | Full adapter feasible; planned |
-| Open WebUI | Native Filters (`inlet`/`stream`/`outlet`), Tools, Valves, message/file events | Full adapter feasible; planned |
-| Botpress | Native hooks, integrations, actions, scoped state, image/video/file cards | Full adapter feasible; planned |
+| ElizaOS | Native plugins, events, providers, evaluators, actions, memories, media callbacks | **Adapter implemented; TypeScript build and 6 behavior tests pass; live runtime/database/connector acceptance pending** |
+| Open WebUI | Native Filters (`inlet`/`stream`/`outlet`), Tools, Valves, message/file events | **Adapter implemented; 5 tests, Python compilation, and wheel build pass; live Open WebUI acceptance pending** |
+| Botpress | Native hooks, integrations, actions, scoped state, image/video/file cards | **Restricted native module implemented; official CLI type generation, TypeScript build, and 6 behavior tests pass; host Bot integration delivers prepared media payloads** |
 | Dify / LibreChat / Rasa / Flowise | Native extension surfaces exist, but at least one required universal hook/settings/media capability is limited | Limited integration only; not a full automatic-reaction target |
 | Coding agents and hosts without a suitable native plugin API | Not a conversational native-plugin target | Not supported by Conversation-Improvement |
 
@@ -64,8 +64,9 @@ A host can still receive a limited adapter when its plugin API lacks one capabil
 ## Native adapters
 
 - `adapters/openclaw` — OpenClaw native TypeScript adapter
-
-Planned full adapters: ElizaOS, Open WebUI, and Botpress.
+- `adapters/elizaos` — ElizaOS native TypeScript plugin
+- `adapters/open-webui` — Open WebUI Filter/Tools Python adapter
+- `adapters/botpress` — Botpress native module with host-integration media delivery boundary
 
 ## Hermes Agent adapter
 

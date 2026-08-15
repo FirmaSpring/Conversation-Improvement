@@ -53,9 +53,9 @@ Conversation-Improvement
 | --- | --- | --- |
 | Hermes Agent | 原生 Python 插件、工具、Hook、命令 | **已实现并通过测试** |
 | OpenClaw | 原生 TypeScript 插件、类型化对话 Hook、工具、会话附件发送 | **适配器已实现；SDK 编译与 3 项行为测试通过；仍待真实 Gateway/频道验收** |
-| ElizaOS | 原生插件、事件、Provider、Evaluator、Action、Memory 与媒体回调 | 可完整适配，已列入计划 |
-| Open WebUI | 原生 Filter、Tool、Valve、消息与文件事件 | 可完整适配，已列入计划 |
-| Botpress | 原生 Hook、Integration、Action、分层状态与媒体卡片 | 可完整适配，已列入计划 |
+| ElizaOS | 原生插件、事件、Provider、Evaluator、Action、Memory 与媒体回调 | **适配器已实现；TypeScript 编译与 6 项行为测试通过；仍待真实运行时、数据库与连接器验收** |
+| Open WebUI | 原生 Filter、Tool、Valve、消息与文件事件 | **适配器已实现；5 项测试、Python 编译与 wheel 构建通过；仍待真实 Open WebUI 验收** |
+| Botpress | 原生 Hook、Integration、Action、分层状态与媒体卡片 | **受限原生模块已实现；官方 CLI 类型生成、TypeScript 编译与 6 项行为测试通过；媒体由宿主 Bot Integration 使用预备 payload 发送** |
 | Dify / LibreChat / Rasa / Flowise | 存在原生扩展面，但通用逐轮 Hook、设置或可靠媒体能力至少有一项受限 | 只考虑受限集成，不作为完整自动表情目标 |
 | 编程 Agent 与缺少合适原生插件 API 的宿主 | 不符合对话原生插件目标 | Conversation-Improvement 不支持 |
 
@@ -64,8 +64,9 @@ Conversation-Improvement
 ## 原生适配器
 
 - `adapters/openclaw`：OpenClaw 原生 TypeScript 适配器
-
-计划中的完整适配器：ElizaOS、Open WebUI、Botpress。
+- `adapters/elizaos`：ElizaOS 原生 TypeScript 插件
+- `adapters/open-webui`：Open WebUI Filter/Tools Python 适配器
+- `adapters/botpress`：Botpress 原生模块，媒体交付由宿主 Integration 负责
 
 ## Hermes Agent 适配器
 

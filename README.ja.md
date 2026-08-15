@@ -53,9 +53,9 @@ Conversation-Improvement
 | --- | --- | --- |
 | Hermes Agent | ネイティブ Python プラグイン、ツール、Hook、コマンド | **実装・テスト済み** |
 | OpenClaw | ネイティブ TypeScript プラグイン、型付き会話 Hook、ツール、セッション添付送信 | **アダプター実装済み。SDK ビルドと 3 件の動作テストは合格。実 Gateway/チャネル受入試験は未実施** |
-| ElizaOS | ネイティブプラグイン、イベント、Provider、Evaluator、Action、Memory、メディアコールバック | 完全適応可能、計画中 |
-| Open WebUI | ネイティブ Filter、Tool、Valve、メッセージ/ファイルイベント | 完全適応可能、計画中 |
-| Botpress | ネイティブ Hook、Integration、Action、スコープ状態、メディアカード | 完全適応可能、計画中 |
+| ElizaOS | ネイティブプラグイン、イベント、Provider、Evaluator、Action、Memory、メディアコールバック | **アダプター実装済み。TypeScript ビルドと 6 件の動作テストは合格。実ランタイム、DB、コネクター受入試験は未実施** |
+| Open WebUI | ネイティブ Filter、Tool、Valve、メッセージ/ファイルイベント | **アダプター実装済み。5 件のテスト、Python コンパイル、wheel ビルドは合格。実 Open WebUI 受入試験は未実施** |
+| Botpress | ネイティブ Hook、Integration、Action、スコープ状態、メディアカード | **制限付きネイティブモジュール実装済み。公式 CLI 型生成、TypeScript ビルド、6 件の動作テストは合格。メディアはホスト Bot Integration が準備済み payload を送信** |
 | Dify / LibreChat / Rasa / Flowise | ネイティブ拡張面はあるものの、共通ターン Hook、設定、または信頼できるメディア機能の少なくとも 1 つが制限される | 制限版のみ。完全自動リアクションの対象外 |
 | コーディングエージェントおよび適切なネイティブプラグイン API がないホスト | 対話ネイティブプラグインの対象外 | Conversation-Improvement では非対応 |
 
@@ -64,8 +64,9 @@ Conversation-Improvement
 ## ネイティブアダプター
 
 - `adapters/openclaw`：OpenClaw ネイティブ TypeScript アダプター
-
-完全アダプターの予定：ElizaOS、Open WebUI、Botpress。
+- `adapters/elizaos`：ElizaOS ネイティブ TypeScript プラグイン
+- `adapters/open-webui`：Open WebUI Filter/Tools Python アダプター
+- `adapters/botpress`：Botpress ネイティブモジュール。メディア配信はホスト Integration が担当
 
 ## Hermes Agent アダプター
 

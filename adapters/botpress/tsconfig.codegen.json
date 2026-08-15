@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": ".codegen",
+    "declaration": false,
+    "noEmitOnError": true
+  },
+  "include": ["src/definition.ts"],
+  "exclude": []
+}

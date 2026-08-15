@@ -1,0 +1,22 @@
+{
+  "name": "@firmaspring/elizaos-conversation-improvement",
+  "version": "0.1.0",
+  "description": "ElizaOS native plugin for restrained visual reactions and persistent image memory",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist", "README.md"],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "@elizaos/core": "2.0.0-alpha.77"
+  },
+  "devDependencies": {
+    "@elizaos/core": "2.0.0-alpha.77",
+    "@types/node": "^24.2.1",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

@@ -8,3 +8,6 @@ build/
 node_modules/
 *.tsbuildinfo
 .tmp-openclaw-test/
+.codegen/
+.botpress/
+.sdk-inspect/
