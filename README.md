@@ -16,7 +16,7 @@ ConversationImprovement adds restrained visual expression and a permanent, searc
 - Newly generated automatic reactions use a chibi sticker style, a blank white or transparent-looking background, and lively natural expressions rather than stiff poses.
 - Ordinary social chat has a 32% eligible-turn chance, playful chat 65%, and the fourth consecutive eligible casual turn is guaranteed. Defaults use a 5-turn cooldown and a 20-item session ceiling.
 - Professional coding, study, debugging, long-task, privacy, health, and serious emotional contexts remain blocked from automatic *generation*, while fitting existing images may still be sent when useful.
-- Every generated image requires a concise human-readable label such as `拥抱-开心`. The label is stored as metadata and embedded in its archived filename, alongside semantic tags.
+- Every generated image has a concise human-readable label such as `拥抱-开心`. The public generation tool requires it; host-generated images that omit it are assigned a readable label from their tags/prompt during archiving, never a date-plus-hash-only filename. The label is stored as metadata and embedded in its archived filename, alongside semantic tags.
 - Generated media is copied to a profile-scoped permanent library with UTC creation time, relevant event date, prompt, source, SHA-256 identity, and semantic tags.
 - Time-specific and historical images record an `event_date` in `YYYY-MM-DD`; requests for older images search the permanent library by tags, prompt text, and inclusive date range, and never generate replacements.
 

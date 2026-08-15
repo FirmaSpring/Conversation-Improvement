@@ -151,7 +151,7 @@ def _post_tool_call(tool_name: str = "", args: dict | None = None, result: objec
     for tag in ("selfie", "自拍", "meme", "表情包", "happy", "开心"):
         if tag.casefold() in prompt.casefold():
             tags.append(tag)
-    archive({"path": image, "prompt": prompt, "tags": tags, "label": str(args.get("label", "自动生成")), "source": "generated"})
+    archive({"path": image, "prompt": prompt, "tags": tags, "label": str(args.get("label", "")), "source": "generated"})
     with _lock:
         if session_id not in _pending_automatic:
             return

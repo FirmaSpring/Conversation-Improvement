@@ -58,6 +58,65 @@ class ImageLibrary:
         clean = clean.replace("/", "-").replace("\\", "-").replace(":", "-")
         return clean[:64] or "untitled"
 
+    @staticmethod
+    def _infer_label(label: str, tags: Iterable[str], prompt: str = "") -> str:
+        """Return a readable archive title even when a host generator omits one."""
+        explicit = ImageLibrary._clean_label(label)
+        if explicit != "untitled":
+            return explicit
+        words = {str(value).strip().casefold() for value in [*tags, prompt] if str(value).strip()}
+        def has(*candidates: str) -> bool:
+            return any(candidate.casefold() in words for candidate in candidates)
+        action = ""
+        if has("hug", "拥抱", "抱抱", "affection"):
+            action = "拥抱"
+        elif has("blush", "blushing", "脸红", "害羞"):
+            action = "脸红害羞"
+        elif has("pout", "pouting", "嘟嘴", "apologetic"):
+            action = "嘟嘴"
+        elif has("heart", "比心"):
+            action = "比心"
+        mood = ""
+        if has("happy", "开心"):
+            mood = "开心"
+        elif has("smile", "微笑", "温柔"):
+            mood = "微笑"
+        elif has("cry", "crying", "哭泣"):
+            mood = "哭泣"
+        elif has("warm", "comfort", "安慰"):
+            mood = "温暖"
+        elif has("playful", "cute", "可爱"):
+            mood = "可爱"
+        if action and mood and mood not in action:
+            return f"{action}-{mood}"
+        if action or mood:
+            return action or mood
+        return "自动生成图片"
+
+    def repair_missing_labels(self) -> int:
+        """Backfill labels and readable filenames for legacy host-generated media."""
+        repaired = 0
+        rows = self._load()
+        for row in rows:
+            current = str(row.get("label", "")).strip()
+            if current and current != "untitled":
+                continue
+            label = self._infer_label(current, row.get("tags", []), row.get("prompt", ""))
+            old_path = Path(row["path"])
+            suffix = old_path.suffix.lower() or ".bin"
+            date = str(row.get("event_date") or row.get("created_at", ""))[:10]
+            target = old_path.with_name(f"{date}_{label}_{str(row.get('id', 'legacy'))[:12]}{suffix}")
+            if old_path.is_file() and old_path != target:
+                old_path.replace(target)
+            row["path"] = str(target)
+            row["label"] = label
+            row["tags"] = sorted(set(row.get("tags", [])) | {label, f"date:{date}"})
+            row["event_date"] = date
+            repaired += 1
+        if repaired:
+            self._save(rows)
+        return repaired
+
     def archive(
         self,
         source_path: Path,
@@ -73,7 +132,7 @@ class ImageLibrary:
         if not source_path.is_file():
             raise FileNotFoundError(source_path)
         digest = hashlib.sha256(source_path.read_bytes()).hexdigest()
-        clean_label = self._clean_label(label)
+        clean_label = self._infer_label(label, tags, prompt)
         clean_tags = sorted({str(tag).strip() for tag in tags if str(tag).strip()} | {clean_label})
         timestamp = (created_at or datetime.now(timezone.utc)).astimezone(timezone.utc)
         clean_event_date = event_date.strip() or f"{timestamp:%Y-%m-%d}"
