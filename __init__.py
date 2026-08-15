@@ -110,9 +110,10 @@ def _pre_llm_call(session_id: str = "", user_message: str = "", is_first_turn: b
         "purpose=explicit_new only when the user explicitly asks for a new/current image, and purpose=automatic_reaction for allowed reactions. "
         "Every generated image MUST include a concise Chinese label that identifies its expression or content, plus useful semantic tags; the label becomes part of its archived filename. "
         "For historical or time-specific images, also supply event_date in YYYY-MM-DD; the library preserves it for dated retrieval. "
+        "Before EVERY image request, search the permanent library first with conversation_image_search or reuse_query. "
         "Never regenerate an older image. Existing library images may be sent at any time when contextually appropriate: "
         "reuse has no probability gate, cooldown, session ceiling, or serious-topic block. Use judgment—send a relevant image, "
-        "not a random or repetitive one. New generation remains subject to the normal automatic-expression policy."
+        "not a random or repetitive one. For explicit_new, a library match MUST be reused by default; set force_new=true only when the user unmistakably asks for a newly created current image. New generation remains subject to the normal automatic-expression policy."
     )
     mode = config.get("mode", "reference")
     if mode == "reference" and config.get("reference_image"):
@@ -193,7 +194,8 @@ def register(ctx) -> None:
         reuse_query = str(args.get("reuse_query", "")).strip()
         if not reuse_query:
             reuse_query = " ".join(str(tag) for tag in (args.get("tags") or []) if str(tag).strip())
-        if purpose in {"automatic_reaction", "historical"}:
+        force_new = bool(args.get("force_new", False))
+        if purpose != "explicit_new" or not force_new:
             reusable = find_reusable(reuse_query)
             if reusable:
                 if purpose == "automatic_reaction":

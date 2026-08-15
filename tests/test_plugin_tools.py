@@ -262,6 +262,30 @@ def test_find_reusable_returns_existing_tagged_reaction(monkeypatch, tmp_path: P
     assert Path(result["image"]).is_file()
 
 
+def test_explicit_request_reuses_matching_library_image_before_generation(monkeypatch, tmp_path: Path):
+    plugin = load_plugin_package()
+    monkeypatch.setenv("HERMES_HOME", str(tmp_path / "hermes"))
+    image = tmp_path / "happy.png"
+    image.write_bytes(b"image")
+    plugin.archive({"path": str(image), "label": "开心", "tags": ["reaction", "happy", "开心"]})
+
+    class Context:
+        def __init__(self):
+            self.tools = {}
+        def register_tool(self, name, handler, **_): self.tools[name] = handler
+        def register_hook(self, *_args, **_kwargs): pass
+        def register_command(self, *_args, **_kwargs): pass
+        def dispatch_tool(self, *_args, **_kwargs): raise AssertionError("matching image must be reused")
+
+    ctx = Context()
+    plugin.register(ctx)
+    result = json.loads(ctx.tools["conversation_image_generate"]({
+        "purpose": "explicit_new", "prompt": "show a happy image", "label": "开心", "tags": ["happy", "开心"],
+    }))
+    assert result["success"] is True
+    assert result["reused"] is True
+
+
 def test_historical_request_never_generates(monkeypatch, tmp_path: Path):
     plugin = load_plugin_package()
     monkeypatch.setenv("HERMES_HOME", str(tmp_path / "hermes"))

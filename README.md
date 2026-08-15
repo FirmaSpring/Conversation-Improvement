@@ -5,6 +5,7 @@ ConversationImprovement adds restrained visual expression and a permanent, searc
 ## Behavior
 
 - Explicit image requests are allowed immediately.
+- Every request searches the permanent library before any provider call. A matching image is reused by default, including on a new chat; an explicit-new request may bypass reuse only with `force_new=true` after the user unmistakably asks for a newly created current image.
 - Automatic image or GIF expressions are enabled by default, but only for playful contexts after a deterministic probability gate.
 - Automatic media is blocked in serious, coding, study, health, privacy, and distress contexts.
 - Existing library images may be reused at any time when contextually appropriate, including outside automatic-generation gates. Reuse has no cooldown, probability gate, session ceiling, or serious-topic block; it must still be relevant and non-repetitive.

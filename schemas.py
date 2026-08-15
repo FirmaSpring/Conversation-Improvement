@@ -45,6 +45,7 @@ GENERATE_SCHEMA = {
                 "description": "automatic_reaction reuses matching library media before generation; historical never generates; explicit_new creates a new image.",
             },
             "reuse_query": {"type": "string", "description": "Short space-separated emotion tags used to find reusable media."},
+            "force_new": {"type": "boolean", "default": False, "description": "Set true only when the user explicitly asks for a newly created current image after reuse has been considered. Otherwise the library is searched first and a match is reused."},
         },
         "required": ["prompt", "purpose", "label"],
     },
