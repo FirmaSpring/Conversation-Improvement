@@ -45,3 +45,15 @@ def test_archive_adds_label_and_default_event_date(tmp_path: Path):
     assert item.event_date == "2026-08-15"
     assert "拥抱-开心" in item.path.name
     assert library.search(query="拥抱-开心")[0].id == item.id
+
+
+def test_search_matches_archived_filename_title(tmp_path: Path):
+    source = tmp_path / "reaction.png"
+    source.write_bytes(b"reaction")
+    library = ImageLibrary(tmp_path / "data")
+    item = library.archive(source, label="慌张", tags=[], created_at=datetime(2026, 8, 15, tzinfo=timezone.utc))
+    rows = library._load()
+    rows[0].update(label="", tags=[], prompt="")
+    library._save(rows)
+
+    assert library.search(query="慌张")[0].id == item.id

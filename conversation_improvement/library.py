@@ -115,7 +115,13 @@ class ImageLibrary:
                 continue
             if date_to and created > date_to:
                 continue
-            haystack = " ".join([row.get("prompt", ""), *row.get("tags", [])]).casefold()
+            filename_title = Path(str(row.get("path", ""))).stem
+            haystack = " ".join([
+                filename_title,
+                row.get("label", ""),
+                row.get("prompt", ""),
+                *row.get("tags", []),
+            ]).casefold()
             if terms and not all(term in haystack for term in terms):
                 continue
             matches.append(self._from_row(row))

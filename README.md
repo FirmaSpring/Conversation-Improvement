@@ -5,7 +5,8 @@ ConversationImprovement adds restrained visual expression and a permanent, searc
 ## Behavior
 
 - Explicit image requests are allowed immediately.
-- Every request searches the permanent library before any provider call. A matching image is reused by default, including on a new chat; an explicit-new request may bypass reuse only with `force_new=true` after the user unmistakably asks for a newly created current image.
+- **Global mandatory sequence:** do not call `conversation_image_generate` as the first image step. First call `conversation_image_search`, which searches stored filenames/titles in `$HERMES_HOME/conversation-improvement/library/media/`. If it returns a contextually suitable image, send that returned path directly as `MEDIA:` and stop. Generate only when no suitable stored title exists, including in a new chat.
+- An explicit-new request may bypass reuse only with `force_new=true` after the user unmistakably asks for a newly created current image.
 - Automatic image or GIF expressions are enabled by default, but only for playful contexts after a deterministic probability gate.
 - Automatic media is blocked in serious, coding, study, health, privacy, and distress contexts.
 - Existing library images may be reused at any time when contextually appropriate, including outside automatic-generation gates. Reuse has no cooldown, probability gate, session ceiling, or serious-topic block; it must still be relevant and non-repetitive.
