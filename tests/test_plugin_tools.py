@@ -289,6 +289,18 @@ def test_historical_request_never_generates(monkeypatch, tmp_path: Path):
     assert result["not_found"] is True
 
 
+def test_existing_images_are_allowed_when_new_automatic_generation_is_blocked(monkeypatch, tmp_path: Path):
+    plugin = load_plugin_package()
+    monkeypatch.setenv("HERMES_HOME", str(tmp_path / "hermes"))
+    plugin.configure({
+        "enabled": True, "mode": "reference", "image_provider": "openai_compatible",
+        "base_url": "https://images.example/v1", "image_model": "image-model", "api_key_env": "TEST_IMAGE_KEY",
+    })
+    context = plugin._pre_llm_call(session_id="serious", user_message="我今天学习很难受", is_first_turn=False)["context"]
+    assert "Existing library images may be sent at any time" in context
+    assert "New automatic generation is not allowed" in context
+
+
 def test_old_policy_config_is_migrated(monkeypatch, tmp_path: Path):
     plugin = load_plugin_package()
     monkeypatch.setenv("HERMES_HOME", str(tmp_path / "hermes"))

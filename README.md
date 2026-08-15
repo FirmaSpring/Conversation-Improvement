@@ -7,11 +7,12 @@ ConversationImprovement adds restrained visual expression and a permanent, searc
 - Explicit image requests are allowed immediately.
 - Automatic image or GIF expressions are enabled by default, but only for playful contexts after a deterministic probability gate.
 - Automatic media is blocked in serious, coding, study, health, privacy, and distress contexts.
+- Existing library images may be reused at any time when contextually appropriate, including outside automatic-generation gates. Reuse has no cooldown, probability gate, session ceiling, or serious-topic block; it must still be relevant and non-repetitive.
 - Automatic reactions search the permanent library first and generate only when no matching media exists.
 - Historical image requests never generate replacements; they return only archived media.
 - Newly generated automatic reactions use a chibi sticker style, a blank white or transparent-looking background, and lively natural expressions rather than stiff poses.
 - Ordinary social chat has a 32% eligible-turn chance, playful chat 65%, and the fourth consecutive eligible casual turn is guaranteed. Defaults use a 5-turn cooldown and a 20-item session ceiling.
-- Professional coding, study, debugging, long-task, privacy, health, and serious emotional contexts remain blocked from automatic media.
+- Professional coding, study, debugging, long-task, privacy, health, and serious emotional contexts remain blocked from automatic *generation*, while fitting existing images may still be sent when useful.
 - Every generated image requires a concise human-readable label such as `拥抱-开心`. The label is stored as metadata and embedded in its archived filename, alongside semantic tags.
 - Generated media is copied to a profile-scoped permanent library with UTC creation time, relevant event date, prompt, source, SHA-256 identity, and semantic tags.
 - Time-specific and historical images record an `event_date` in `YYYY-MM-DD`; requests for older images search the permanent library by tags, prompt text, and inclusive date range, and never generate replacements.

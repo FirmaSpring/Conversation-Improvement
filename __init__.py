@@ -110,7 +110,9 @@ def _pre_llm_call(session_id: str = "", user_message: str = "", is_first_turn: b
         "purpose=explicit_new only when the user explicitly asks for a new/current image, and purpose=automatic_reaction for allowed reactions. "
         "Every generated image MUST include a concise Chinese label that identifies its expression or content, plus useful semantic tags; the label becomes part of its archived filename. "
         "For historical or time-specific images, also supply event_date in YYYY-MM-DD; the library preserves it for dated retrieval. "
-        "Never regenerate an older image. Automatic reactions must reuse a matching library image when available."
+        "Never regenerate an older image. Existing library images may be sent at any time when contextually appropriate: "
+        "reuse has no probability gate, cooldown, session ceiling, or serious-topic block. Use judgment—send a relevant image, "
+        "not a random or repetitive one. New generation remains subject to the normal automatic-expression policy."
     )
     mode = config.get("mode", "reference")
     if mode == "reference" and config.get("reference_image"):
@@ -126,7 +128,7 @@ def _pre_llm_call(session_id: str = "", user_message: str = "", is_first_turn: b
             _pending_automatic.add(session_id)
         strength = "MUST" if decision.reason == "casual_guarantee" else "SHOULD"
         return {"context": common + f" This is ordinary social conversation and passed the automatic-expression gate ({decision.reason}). You {strength} call conversation_image_generate exactly once with purpose=automatic_reaction and concise emotion tags, then deliver the returned image. Prefer an existing matching image; do not regenerate when reuse succeeds."}
-    return {"context": common + f" Automatic media is not allowed this turn ({decision.reason}); reply with text only unless the user explicitly clarifies that they want an image."}
+    return {"context": common + f" New automatic generation is not allowed this turn ({decision.reason}). You may still send one already-archived, contextually fitting image whenever it genuinely improves the reply; do not generate a new one unless explicitly requested."}
 
 
 def _post_tool_call(tool_name: str = "", args: dict | None = None, result: object = None, session_id: str = "", **_: object):
